@@ -50,3 +50,11 @@ panel.port.on('search', function(search) {
     panel.port.emit('update-items', pass.getMatchingItems(search));
 });
 
+var showHotKey = require('sdk/hotkeys').Hotkey({
+    combo: "alt-p",
+    onPress: function() {
+        panel.show({ position: button });
+        panel.port.emit('show');
+    }
+});
+
