@@ -422,3 +422,5 @@ exports.getPasswordData = getPasswordData;
 exports.getRootItems = function() {
   return rootItems;
 };
+
+exports.getMatchingItems = getMatchingItems;

@@ -27,6 +27,7 @@ let button = buttons.ActionButton({
 
   onClick: function () {
     panel.show({ position: button });
+    panel.port.emit('show');
   }
 });
 
@@ -41,4 +42,11 @@ panel.port.on('fill-submit', function (item) {
 });
 
 panel.port.emit('update-items', pass.getRootItems());
+panel.port.on('refresh', function() {
+    panel.port.emit('update-items', pass.getRootItems());
+});
+
+panel.port.on('search', function(search) {
+    panel.port.emit('update-items', pass.getMatchingItems(search));
+});
 

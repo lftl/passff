@@ -6,11 +6,26 @@
 let entryList = document.getElementById('entry-list');
 let itemStack = [];
 
+
 self.port.on('update-items', function (items) {
   itemStack = [
     { children: items }  // fake root item
   ];
   updateView();
+});
+
+let searchBox = document.getElementById('search-box');
+searchBox.addEventListener('keyup', function(e) {
+    self.port.emit('search', searchBox.value);
+});
+self.port.on('show', function() {
+    searchBox.focus();
+    searchBox.select();
+});
+
+let refresh = document.getElementById('refresh');
+refresh.addEventListener('click', function() {
+    self.port.emit('refresh');
 });
 
 function updateView() {
