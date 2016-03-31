@@ -16,7 +16,7 @@ let Item = function (depth, key, parent) {
     let loopParent = parent;
     while (loopParent) {
       fullKey = loopParent.key + '/' + fullKey;
-      loopParent = loopParent.parent;
+      loopParent = loopParent.getParent();
     }
     return fullKey;
   })();
