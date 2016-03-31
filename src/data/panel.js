@@ -92,3 +92,10 @@ function createEntryOption(item) {
 
   return entryOption;
 }
+
+entryList.addEventListener('keyup', function(e) {
+    console.log(e.keyCode);
+    if(e.keyCode == 13) {
+        entryList.selectedOptions[0].click();
+    }
+});
