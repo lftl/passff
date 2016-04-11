@@ -94,7 +94,7 @@ function getLoginInputs(loginInputNames) {
   let inputArray = Array.prototype.slice.call(document.getElementsByTagName('input'));
   return inputArray.filter(function(input) {
     return (input.type == 'text' || input.type == 'email' || input.type == 'tel') &&
-            matchFieldName(input.name, loginInputNames);
+            (matchFieldName(input.name, loginInputNames) || matchFieldName(input.id, loginInputNames));
   });
 }
 
