@@ -1,6 +1,8 @@
 /* jshint node: true */
 'use strict';
 
+let { Cc, Ci } = require('chrome');
+
 let buttons = require('sdk/ui/button/action');
 let prefs = require('sdk/simple-prefs').prefs;
 let self = require('sdk/self');
@@ -14,6 +16,19 @@ let panel = require('sdk/panel').Panel({
   contentURL: self.data.url('panel.html'),
   contentScriptFile: self.data.url('panel.js')
 });
+
+let copyToClipboard = function(text) {
+    let str = Cc['@mozilla.org/supports-string;1'].createInstance(Ci.nsISupportsString);
+    let trans = Cc['@mozilla.org/widget/transferable;1'].createInstance(Ci.nsITransferable);
+    let clip = Cc['@mozilla.org/widget/clipboard;1'].getService(Ci.nsIClipboard);
+
+    str.data = text;
+
+        trans.addDataFlavor('text/unicode');
+    trans.setTransferData('text/unicode', str, str.data.length * 2);
+
+    clip.setData(trans, null, Ci.nsIClipboard.kGlobalClipboard);
+};
 
 let button = buttons.ActionButton({
   id: 'passff-button',
@@ -49,6 +64,16 @@ panel.port.on('refresh', function() {
 
 panel.port.on('search', function(search) {
     panel.port.emit('update-items', pass.getMatchingItems(search));
+});
+
+panel.port.on('copy-login', function (item) {
+    panel.hide();
+    copyToClipboard(pass.getPasswordData(item).login);
+});
+
+panel.port.on('copy-password', function (item) {
+    panel.hide();
+    copyToClipboard(pass.getPasswordData(item).password);
 });
 
 var showHotKey = require('sdk/hotkeys').Hotkey({
