@@ -101,7 +101,7 @@ function getLoginInputs(loginInputNames) {
 function getPasswordInputs(passwordInputNames) {
   let inputArray = Array.prototype.slice.call(document.getElementsByTagName('input'));
   return inputArray.filter(function(input) {
-    return (input.type == 'password' && matchFieldName(input.name, passwordInputNames));
+    return (input.type == 'password');
   });
 }
 
