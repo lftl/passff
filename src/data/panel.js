@@ -25,7 +25,10 @@ searchBox.addEventListener('keyup', function(e) {
     }
 });
 
-self.port.on('show', function() {
+self.port.on('show', function(url) {
+    if(url) {
+        searchBox.value = url;
+    }
     searchBox.focus();
     searchBox.select();
 });
@@ -94,7 +97,6 @@ function createEntryOption(item) {
 }
 
 entryList.addEventListener('keyup', function(e) {
-    console.log(e.keyCode);
     if(e.keyCode == 13) {
         entryList.selectedOptions[0].click();
     }

@@ -5,6 +5,7 @@ let buttons = require('sdk/ui/button/action');
 let prefs = require('sdk/simple-prefs').prefs;
 let self = require('sdk/self');
 let tabs = require('sdk/tabs');
+let {URL} = require('sdk/url');
 
 let workers = require('lib/workers');
 let pass = require('lib/pass');
@@ -53,8 +54,9 @@ panel.port.on('search', function(search) {
 var showHotKey = require('sdk/hotkeys').Hotkey({
     combo: "alt-p",
     onPress: function() {
+        var host = URL(tabs.activeTab.url).hostname.split('.').slice(-2).join('.');
         panel.show({ position: button });
-        panel.port.emit('show');
+        panel.port.emit('show', host);
     }
 });
 
