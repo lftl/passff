@@ -30,6 +30,12 @@ let copyToClipboard = function(text) {
     clip.setData(trans, null, Ci.nsIClipboard.kGlobalClipboard);
 };
 
+let showPanel = function() {
+    var host = URL(tabs.activeTab.url).hostname.split('.').slice(-2).join('.');
+    panel.show({ position: button });
+    panel.port.emit('show', host);
+};
+
 let button = buttons.ActionButton({
   id: 'passff-button',
   label: 'PassFF',
@@ -42,8 +48,7 @@ let button = buttons.ActionButton({
   },
 
   onClick: function () {
-    panel.show({ position: button });
-    panel.port.emit('show');
+      showPanel();
   }
 });
 
@@ -79,9 +84,7 @@ panel.port.on('copy-password', function (item) {
 var showHotKey = require('sdk/hotkeys').Hotkey({
     combo: "alt-p",
     onPress: function() {
-        var host = URL(tabs.activeTab.url).hostname.split('.').slice(-2).join('.');
-        panel.show({ position: button });
-        panel.port.emit('show', host);
+        showPanel();
     }
 });
 
