@@ -95,10 +95,24 @@ function matchFieldName(fieldName, goodFieldNames) {
 
 function getLoginInputs(loginInputNames) {
   let inputArray = Array.prototype.slice.call(document.getElementsByTagName('input'));
-  return inputArray.filter(function(input) {
+  let results = inputArray.filter(function(input) {
     return (input.type == 'text' || input.type == 'email' || input.type == 'tel') &&
             (matchFieldName(input.name, loginInputNames) || matchFieldName(input.id, loginInputNames));
   });
+
+  if(results.length === 0) {
+      let labelArray = Array.prototype.slice.call(document.getElementsByTagName('label'));
+      labelArray.forEach(function(label, index) {
+          if(matchFieldName(label.innerText, loginInputNames)) {
+              let element = document.getElementById(label.htmlFor);
+              if(element && (element.type == 'text'  || element.type == 'email' || element.type == 'tel')) {
+                  results.push(element);
+              }
+          }
+      });
+  }
+
+  return results;
 }
 
 function getPasswordInputs(passwordInputNames) {
