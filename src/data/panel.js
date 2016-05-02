@@ -18,7 +18,7 @@ let searchBox = document.getElementById('search-box');
 searchBox.addEventListener('keyup', function(e) {
     self.port.emit('search', searchBox.value);
     if(e.keyCode == 13) {
-        self.port.emit('fill', itemStack[itemStack.length-1].children[0]);
+        self.port.emit('fill-submit', itemStack[itemStack.length-1].children[0]);
     } else if (e.keyCode == 40) {
         entryList.focus();
         entryList.children[0].selected = true;
