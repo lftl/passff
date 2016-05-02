@@ -147,7 +147,7 @@ function getPasswordData(item) {
     });
   }
 
-  return {'login': getLogin(result, item.key), 'password': getPassword(result)};
+  return {'login': getLogin(result), 'password': getPassword(result)};
 }
 
 function getPassword(passwordData) {
@@ -163,7 +163,7 @@ function getPassword(passwordData) {
   return '';
 }
 
-function getLogin(passwordData, key) {
+function getLogin(passwordData) {
   let login;
   let loginFields = prefs.loginFieldNames.toLowerCase().split(',');
 
@@ -173,7 +173,7 @@ function getLogin(passwordData, key) {
     }
   }
 
-  return key;
+  return false;
 }
 
 function isLoginField(name) {

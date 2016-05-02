@@ -37,9 +37,12 @@ function processDocument(passwordData, doc = document, depth = 0) {
   getPasswordInputs(passwordFieldNames).forEach(function(input) {
     input.value = passwordData.password;
   });
-  getLoginInputs(loginFieldNames).forEach(function(input) {
-    input.value = passwordData.login;
-  });
+
+  if(passwordData.login !== false) {
+    getLoginInputs(loginFieldNames).forEach(function(input) {
+        input.value = passwordData.login;
+    });
+  }
 
   if (depth <= iframeSearchDepth) {
     let iframes = doc.getElementsByTagName('iframe');
